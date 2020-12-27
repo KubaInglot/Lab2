@@ -5,28 +5,56 @@
 #include <vector>
 #include "LabApp.h"
 
+#include <sstream>
+
 using namespace std;
 
 vector<string> vec_names;
 vector<int> vec_year;
 vector<string> vec_address;
 
-fstream load_file(const string& path)
+void load_file(const string& path)
 {
 	fstream file;
+	string line;
+	int line_number = 1;
 	file.open(path, ios::in); // ios:in = odczyt pliku
 	
 	if (file.good() == true)
 	{	
-		cout << "File loaded correctly.";
-		return file;
+		cout << "File loaded correctly." << endl;
 	}
 	else
 	{
-		cout << "File load failed!";
-		return {};
-	}	
+		cout << "File load failed!" << endl;
+	}
+	
+
+	while (getline(file, line))
+	{
+		switch (line_number)
+		{
+		case 1:
+			cout << line << endl;
+			break;
+		case 2:
+			cout << line << endl;
+			break;
+		case 3:
+			cout << line << endl;
+			break;
+		default:
+			break;
+		}
+		
+		line_number++;
+		if (line_number == 4)
+		{
+			line_number = 1;
+		}
+	}
 }
+
 
 void temp_file()
 {
@@ -200,7 +228,8 @@ bool is_man(int Y) //2,4,6=man 3,5,7=kvinna
 
 int main()
 {
-	auto loaded_file = load_file("names.txt");
+	load_file("names.txt");
+
 	//change_name(vec_names);
 	//save_file(vec_names, vec_address);
 }
