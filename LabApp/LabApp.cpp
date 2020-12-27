@@ -1,19 +1,16 @@
 ﻿#include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <iterator>
 #include <string>
 #include <vector>
-#include "names.txt"
 #include "LabApp.h"
-
 using namespace std;
 
-vector<string> vec_Of_Names;
-vector<int> vec_Of_Year;
-vector<string> vec_Of_Adres;
+vector<string> vec_names;
+vector<int> vec_year;
+vector<string> vec_address;
 
-void Load_file()
+void load_file()
 {
 	fstream file;
 	file.open("names.txt", ios::in); // ios:in = odczyt pliku 
@@ -24,8 +21,7 @@ void Load_file()
 	{
 		cout << "file cant open";
 	}
-
-	//1
+	
 	int year_Temp;
 	string name_Temp;
 	string adres_Temp;
@@ -36,7 +32,7 @@ void Load_file()
 		switch (line_number)
 		{
 		case 1: name_Temp = line;
-			vec_Of_Names.push_back(name_Temp);
+			vec_names.push_back(name_Temp);
 			break;
 
 		case 2:
@@ -48,11 +44,11 @@ void Load_file()
 				}
 			}
 			year_Temp = atoi(control.c_str());
-			vec_Of_Year.push_back(year_Temp);
+			vec_year.push_back(year_Temp);
 			break;
 
 		case 3: adres_Temp = line;
-			vec_Of_Adres.push_back(adres_Temp);
+			vec_address.push_back(adres_Temp);
 			break;
 
 
@@ -66,7 +62,7 @@ void Load_file()
 	file.close();
 }
 
-void Save_file(vector<string> names, vector<string> adress)
+void save_file(vector<string> names, vector<string> address)
 {
 	fstream file;
 	file.open("names.txt", ios::out); //ios:out =zapis do pliku 
@@ -80,20 +76,20 @@ void Save_file(vector<string> names, vector<string> adress)
 		cout << "file cant open";
 	}
 
-	ByteNamn(names);
+	change_name(names);
 	string temp;
-	for (int i = 0; (i <= names.size()) & (i <= adress.size()); i++)
+	for (int i = 0; (i <= names.size()) & (i <= address.size()); i++)
 	{
 		name_Temp = names[i];
-		adres_Temp = adress[i];
-		Man_eller_kvinna(vec_Of_Year[i]);
+		adres_Temp = address[i];
+		is_man(vec_year[i]);
 
-		if (Man_eller_kvinna(vec_Of_Year[i]) == true)
+		if (is_man(vec_year[i]) == true)
 		{
 			file << name_Temp << endl << adres_Temp << endl << "Man" << endl;
 		}
 
-		if (Man_eller_kvinna(vec_Of_Year[i]) == true)
+		if (is_man(vec_year[i]) == true)
 		{
 			file << name_Temp << endl << adres_Temp << endl << "Kvinna" << endl;
 		}
@@ -122,7 +118,7 @@ void Save_file(vector<string> names, vector<string> adress)
 	file.close();
 }
 
-void ByteNamn(vector<string> names)
+void change_name(vector<string> names)
 {
 	vector<string> name_first, name_second;
 	string temp;
@@ -161,8 +157,7 @@ void ByteNamn(vector<string> names)
 	}
 }
 
-//2
-bool Man_eller_kvinna(int Y) //2,4,6=man 3,5,7=kvinna
+bool is_man(int Y) //2,4,6=man 3,5,7=kvinna
 {
 	string control;
 	if (atoi(control.c_str) % 2 == 0)
@@ -189,7 +184,7 @@ bool Man_eller_kvinna(int Y) //2,4,6=man 3,5,7=kvinna
 
 int main()
 {
-	Load_file();
-	ByteNamn(vec_Of_Names);
-	Save_file(vec_Of_Names, vec_Of_Adres);
+	load_file();
+	change_name(vec_names);
+	save_file(vec_names, vec_address);
 }

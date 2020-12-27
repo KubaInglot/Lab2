@@ -1,3 +1,3 @@
 #pragma once
 
-void ByteNamn(std::vector<std::string> names);
+void change_name(std::vector<std::string> names);
