@@ -131,44 +131,6 @@ void save_file(vector<string> names, vector<string> address, vector<string> gend
 	file.close();
 }
 
-void change_name(vector<string> names)
-{
-	//vector<string> name_first, name_second;
-	//string temp;
-
-	////dela efternamn och namn i två
-	//for (int i = 0; i <= names.size(); i++)
-	//{
-	//	for (int nameletter = 0; nameletter < names[i].length; nameletter++)
-	//	{
-	//		while (isalpha(names[i][nameletter]) == true)
-	//		{
-	//			temp = temp + ((names[i])[nameletter]);
-	//		}
-	//		name_first.push_back(temp);
-	//		temp = "";
-	//		nameletter++; // Kommer orsaka problem om det finns mer än 1 space mellan namn och effternamn
-
-	//		while (isalpha(names[i][nameletter]) == true)
-	//		{
-	//			temp = temp + ((names[i])[nameletter]);
-	//		}
-	//		name_second.push_back(temp);
-	//		temp = "";
-	//	}
-	//}
-
-
-	////Organisera om till namn och efternamn
-	//for (int i = 0; i <= name_second.size(); i++)
-	//{
-	//	temp = temp + name_second[i] + " ";
-	//	for (int i2 = 0; i2 <= name_first.size(); i2++)
-	//	{
-	//		temp = temp + name_first[i2];
-	//	}
-	//}
-}
 
 bool is_man(int Y) //2,4,6=man 3,5,7=kvinna
 {
