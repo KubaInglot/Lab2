@@ -8,45 +8,50 @@
 #include <sstream>
 
 using namespace std;
-
 vector<string> vec_names;
-vector<int> vec_year;
+vector<string> vec_national_id_nr;
 vector<string> vec_address;
 
 void load_file(const string& path)
 {
 	fstream file;
 	string line;
+	string name_temp;
+	string address_temp;
+	string national_id_nr_temp;
 	int line_number = 1;
-	file.open(path, ios::in); // ios:in = odczyt pliku
 	
-	if (file.good() == true)
+	file.open(path, ios::in);
+	
+	if (file.is_open() && file.good() == true)
 	{	
 		cout << "File loaded correctly." << endl;
 	}
 	else
 	{
 		cout << "File load failed!" << endl;
+		exit(0);
 	}
-	
 
 	while (getline(file, line))
-	{
+	{		
 		switch (line_number)
 		{
 		case 1:
-			cout << line << endl;
+			name_temp = line;
+			vec_names.push_back(name_temp);
 			break;
 		case 2:
-			cout << line << endl;
+			national_id_nr_temp = line;
+			vec_national_id_nr.push_back(national_id_nr_temp);
 			break;
 		case 3:
-			cout << line << endl;
+			address_temp = line;
+			vec_address.push_back(address_temp);
 			break;
 		default:
 			break;
-		}
-		
+		}		
 		line_number++;
 		if (line_number == 4)
 		{
@@ -54,7 +59,6 @@ void load_file(const string& path)
 		}
 	}
 }
-
 
 void temp_file()
 {
@@ -109,60 +113,22 @@ void temp_file()
 	file.close();
 }
 
-void save_file(vector<string> names, vector<string> address)
+void save_file(vector<string> names, vector<string> address, vector<string> genders)
 {
-	//fstream file;
-	//file.open("names.txt", ios::out); //ios:out =zapis do pliku 
+	fstream file;
+	string line;	
+	file.open("outNames.txt", ios::out);
+	
+	for (auto i = 0; (i < names.size()) && (i < address.size()); i++)
+	{
+		auto name_temp = names[i];
+		auto address_temp = address[i];
+		auto gender = genders[i];
+		file << name_temp << gender << endl;
+		file << address_temp << endl;
+	}
 
-	//int line_number = 1;
-	//string line, name_Temp, adres_Temp;
-
-	////finns filen redan?
-	//if (file.good() == false)
-	//{
-	//	cout << "file cant open";
-	//}
-
-	//change_name(names);
-	//string temp;
-	//for (int i = 0; (i <= names.size()) & (i <= address.size()); i++)
-	//{
-	//	name_Temp = names[i];
-	//	adres_Temp = address[i];
-	//	is_man(vec_year[i]);
-
-	//	if (is_man(vec_year[i]) == true)
-	//	{
-	//		file << name_Temp << endl << adres_Temp << endl << "Man" << endl;
-	//	}
-
-	//	if (is_man(vec_year[i]) == true)
-	//	{
-	//		file << name_Temp << endl << adres_Temp << endl << "Kvinna" << endl;
-	//	}
-	//	else
-	//	{
-	//		cout << "Save_File Error";
-	//	}
-	//}
-
-	//switch (line_number)
-	//{
-	//case 1:
-	//	file << name_Temp << " " << endl;
-	//	break;
-
-	//case 2:
-	//	file << adres_Temp << endl;
-	//	break;
-
-
-	//default:
-	//	break;
-	//}
-
-
-	//file.close();
+	file.close();
 }
 
 void change_name(vector<string> names)
@@ -227,9 +193,52 @@ bool is_man(int Y) //2,4,6=man 3,5,7=kvinna
 	return false;
 }
 
+vector<string> swap_names(vector<string> names)
+{
+	// swap FirstName with LastName
+
+
+	vector<string> name_first, name_second;
+	string temp;
+	
+	//dela efternamn och namn i två
+	for (int i = 0; i < names.size(); i++)
+	{
+		string line = names[i];
+
+		std::string delimiter = " ";
+
+		size_t pos = 0;
+		std::string first_name;
+		std::string last_name;
+		while ((pos = line.find(delimiter)) != std::string::npos)
+		{
+			first_name = line.substr(0, pos);
+			std::cout << first_name << std::endl;
+			last_name = line.erase(0, pos + delimiter.length());
+			std::cout << last_name << std::endl;
+		}
+
+		names[i] = last_name + delimiter + first_name;
+	}
+	
+	return names;
+};
+
+vector<string> define_gender(vector<string> ids)
+{
+	// change NationalId to gender char
+	
+	return ids;
+};
+
 int main()
 {
 	load_file("names.txt");
+	vec_names = swap_names(vec_names);
+	vector<string> vec_gender_national_id_nr = define_gender(vec_national_id_nr);
+	
+	save_file(vec_names, vec_address, vec_gender_national_id_nr);
 
 	//change_name(vec_names);
 	//save_file(vec_names, vec_address);
