@@ -195,17 +195,12 @@ bool is_man(int Y) //2,4,6=man 3,5,7=kvinna
 
 vector<string> swap_names(vector<string> names)
 {
-	// swap FirstName with LastName
-
-
 	vector<string> name_first, name_second;
-	string temp;
-	
-	//dela efternamn och namn i två
+	string temp;	
+
 	for (int i = 0; i < names.size(); i++)
 	{
 		string line = names[i];
-
 		std::string delimiter = " ";
 
 		size_t pos = 0;
