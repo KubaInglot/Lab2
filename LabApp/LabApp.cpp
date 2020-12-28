@@ -73,6 +73,7 @@ void temp_file()
 	string adres_Temp;
 	string control;
 
+	//test
 	//while (getline(file, line))
 	//{
 	//	switch (line_number)
